@@ -116,6 +116,32 @@ USING(movie_id)
 WHERE specs.length_in_min < 120
 ;
 
+--option #3 THE SLEEK AND SEXY
+
+SELECT 'movies over 2 hours' AS movie_length, AVG(rating.imdb_rating) AS avg_rating
+FROM rating 
+JOIN specs 
+USING(movie_id)
+WHERE specs.length_in_min >= 120
+
+UNION 
+
+SELECT 'movies under 2 hours' AS movie_length, AVG(rating.imdb_rating) AS avg_rating
+FROM rating 
+JOIN specs 
+USING(movie_id)
+WHERE specs.length_in_min < 120
+;
+
+-- option #4
+
+SELECT (specs.length_in_min / 120) AS hours, AVG(rating.imdb_rating) AS avg_rating
+FROM specs
+INNER JOIN rating
+USING(movie_id)
+GROUP BY hours
+ORDER BY hours DESC;
+
 -- ## Joins Exercise Bonus Questions
 
 -- 1.	Find the total worldwide gross and average imdb rating by decade. 
